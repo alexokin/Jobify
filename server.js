@@ -4,15 +4,25 @@ import dotenv from "dotenv";
 const app = express();
 dotenv.config();
 
+// db and authenticate user
 import connectDB from "./db/connect.js";
 
+//routers
+import authRouter from "./api/auth/auth.routes.js";
+import jobsRouter from "./api/jobs/jobs.routes.js"
 // middleware
-import notFoundMiddleware from "./middleware/not-found.js";
-import errorHandlerMiddleware from "./middleware/error-handler.js";
+import notFoundMiddleware from "./middleware/notFound.middleware.js";
+import errorHandlerMiddleware from "./middleware/errorHandler.middleware.js";
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Welcome!");
 });
+
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/jobs", jobsRouter);
+
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
@@ -24,11 +34,11 @@ app.listen(port, () => {
 });
 
 const start = async () => {
-    try {
-        await connectDB(process.env.MONGO_URL)
-    } catch (error) {
-        console.log(error);
-    }
-}
+  try {
+    await connectDB(process.env.MONGO_URL);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-start()
+start();
