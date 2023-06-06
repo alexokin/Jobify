@@ -1,13 +1,17 @@
-const register = async (req,res) => {
-    res.send('register user')
-}
+import User from "../../models/User.js";
+import { StatusCodes } from "http-status-codes";
 
-const login = async (req,res) => {
-    res.send('login user')
-}
+const register = async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(StatusCodes.CREATED).json({ user });
+};
 
-const updateUser = async (req,res) => {
-    res.send('updateUser ')
-}
+const login = async (req, res) => {
+  res.send("login user");
+};
 
-export {register, login, updateUser}
+const updateUser = async (req, res) => {
+  res.send("updateUser ");
+};
+
+export { register, login, updateUser };
