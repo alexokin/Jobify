@@ -1,6 +1,7 @@
 import express from "express";
 import "express-async-errors"
 import dotenv from "dotenv";
+import cors from "cors"
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,7 @@ import jobsRouter from "./api/jobs/jobs.routes.js"
 import notFoundMiddleware from "./middleware/notFound.middleware.js";
 import errorHandlerMiddleware from "./middleware/errorHandler.middleware.js";
 
+app.use(cors())
 app.use(express.json());
 
 app.get("/", (req, res) => {
