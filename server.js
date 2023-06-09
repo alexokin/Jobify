@@ -1,7 +1,8 @@
 import express from "express";
-import "express-async-errors"
+import "express-async-errors";
+import morgan from "morgan";
 import dotenv from "dotenv";
-import cors from "cors"
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -11,12 +12,15 @@ import connectDB from "./db/connect.js";
 
 //routers
 import authRouter from "./api/auth/auth.routes.js";
-import jobsRouter from "./api/jobs/jobs.routes.js"
+import jobsRouter from "./api/jobs/jobs.routes.js";
 // middleware
 import notFoundMiddleware from "./middleware/notFound.middleware.js";
 import errorHandlerMiddleware from "./middleware/errorHandler.middleware.js";
 
-app.use(cors())
+app.use(cors());
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -25,7 +29,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", jobsRouter);
-
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
