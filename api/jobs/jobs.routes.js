@@ -8,6 +8,7 @@ import {
   showStats,
 } from "./jobs.controller.js";
 
+
 router.route('/').post(createJobs).get(getAllJobs)
 router.route('/stats').get(showStats)
 router.route('/:id').delete(deleteJob).patch(updateJob)
