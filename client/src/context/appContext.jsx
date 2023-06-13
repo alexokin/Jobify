@@ -108,6 +108,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const updateUser = async (currentUser) => {
+    console.log(currentUser);
+  }
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -124,6 +128,7 @@ const AppProvider = ({ children }) => {
         displayAlert,
         registerUser,
         loginUser,
+        updateUser,
         toggleSidebar,
         logoutUser,
       }}
