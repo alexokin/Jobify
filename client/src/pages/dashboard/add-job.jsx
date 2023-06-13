@@ -2,6 +2,7 @@ import React from "react";
 import { useAppContext } from "../../context/appContext";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import FormRow from "../../components/form-row";
+import FormRowSelect from "../../components/form-row-select";
 import Alert from "../../components/alert";
 
 const AddJob = () => {
@@ -19,12 +20,12 @@ const AddJob = () => {
   } = useAppContext();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if(!position || !company || !jobLocation){
-      displayAlert()
-      return
+    e.preventDefault();
+    if (!position || !company || !jobLocation) {
+      displayAlert();
+      return;
     }
-    console.log('create job');
+    console.log("create job");
   };
 
   const handleJobInput = (e) => {
@@ -58,8 +59,25 @@ const AddJob = () => {
             value={jobLocation}
             handleChange={handleJobInput}
           />
+          <FormRowSelect
+            name="status"
+            value={status}
+            handleChange={handleJobInput}
+            list={statusOptions}
+          />
+          <FormRowSelect
+            name="jobType"
+            labelText="job type"
+            value={jobType}
+            handleChange={handleJobInput}
+            list={jobTypeOptions}
+          />
           <div className="btn-container">
-            <button type="submit" className="btn btn-block submit-btn" onClick={handleSubmit}>
+            <button
+              type="submit"
+              className="btn btn-block submit-btn"
+              onClick={handleSubmit}
+            >
               submit
             </button>
           </div>
