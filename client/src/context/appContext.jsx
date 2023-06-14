@@ -17,6 +17,7 @@ import {
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
   HANDLE_CHANGE,
+  CLEAR_VALUES
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -175,6 +176,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
   };
 
+  const clearValues = () => {
+    dispatch({type:CLEAR_VALUES})
+  }
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -194,7 +199,8 @@ const AppProvider = ({ children }) => {
         updateUser,
         toggleSidebar,
         logoutUser,
-        handleChange
+        handleChange,
+        clearValues
       }}
     >
       {children}
