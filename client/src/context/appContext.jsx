@@ -16,6 +16,7 @@ import {
   UPDATE_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  HANDLE_CHANGE,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -31,15 +32,15 @@ const initialState = {
   token: token,
   userLocation: userLocation || "",
   showSidebar: false,
-  isEditing:false,
-  editJobId:'',
-  position:'',
-  company:'',
+  isEditing: false,
+  editJobId: "",
+  position: "",
+  company: "",
   jobLocation: userLocation || "",
-  jobTypeOptions:["full-time", "part-time", "remote", "internship"],
-  jobType:'full-time',
-  statusOptions:["interview", "declined", "pending"],
-  status:'pending'
+  jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
+  jobType: "full-time",
+  statusOptions: ["interview", "declined", "pending"],
+  status: "pending",
 };
 
 const AppContext = React.createContext();
@@ -170,6 +171,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -189,6 +194,7 @@ const AppProvider = ({ children }) => {
         updateUser,
         toggleSidebar,
         logoutUser,
+        handleChange
       }}
     >
       {children}
