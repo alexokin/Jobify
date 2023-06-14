@@ -7,6 +7,7 @@ import Alert from "../../components/alert";
 
 const AddJob = () => {
   const {
+    isLoading,
     isEditing,
     showAlert,
     displayAlert,
@@ -19,6 +20,7 @@ const AddJob = () => {
     statusOptions,
     handleChange,
     clearValues,
+    createJob
   } = useAppContext();
 
   const handleSubmit = (e) => {
@@ -27,7 +29,11 @@ const AddJob = () => {
       displayAlert();
       return;
     }
-    console.log("create job");
+    if (isEditing) {
+      //eventually editjob
+      return
+    }
+    createJob()
   };
 
   const handleJobInput = (e) => {
@@ -79,6 +85,7 @@ const AddJob = () => {
               type="submit"
               className="btn btn-block submit-btn"
               onClick={handleSubmit}
+              disabled={isLoading}
             >
               submit
             </button>
