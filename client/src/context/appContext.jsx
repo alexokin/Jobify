@@ -28,6 +28,8 @@ import {
   EDIT_JOB_BEGIN,
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -56,6 +58,8 @@ const initialState = {
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
+  stats: {},
+  monthlyApplications: [],
 };
 
 const AppContext = React.createContext();
@@ -258,7 +262,7 @@ const AppProvider = ({ children }) => {
         jobType,
         status,
       });
-      dispatch({type:EDIT_JOB_SUCCESS})
+      dispatch({ type: EDIT_JOB_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
     } catch (error) {
       if (error.response.status === 401) return;
@@ -267,7 +271,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       });
     }
-    clearAlert()
+    clearAlert();
   };
 
   const deleteJob = async (jobId) => {
@@ -281,10 +285,29 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const showStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN });
+    try {
+      const { data } = await authFetch.get(`/jobs/stats`);
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: {
+          stats: data.defaultStats,
+          monthlyApplications: data.monthlyApplications,
+        },
+      });
+    } catch (error) {
+      console.log(error.response)
+      // logoutUser()
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
         ...state,
+        showStats,
         editJob,
         setEditJob,
         deleteJob,
