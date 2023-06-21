@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useState } from "react";
+import BarChart from "./bar-chart";
+import AreaChart from "./area-chart";
+import { useAppContext } from "../context/appContext";
+import Wrapper from "../assets/wrappers/ChartsContainer";
 
 const ChartsContainer = () => {
-  return (
-    <div>ChartsContainer</div>
-  )
-}
+  const [barChart, setBarChart] = useState(true);
+  const { monthlyApplications: data } = useAppContext();
 
-export default ChartsContainer
+  return (
+    <Wrapper>
+      <h4>Monthly Applications</h4>
+      <button type="button" onClick={() => setBarChart(!barChart)}>
+        {barChart ? "Area Chart" : "Bar Chart"}
+      </button>
+      {barChart ? <BarChart data={data} /> : <AreaChart data={data} />}
+    </Wrapper>
+  );
+};
+
+export default ChartsContainer;
