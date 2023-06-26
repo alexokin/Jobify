@@ -3,6 +3,13 @@ import "express-async-errors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
 
 const app = express();
 dotenv.config();
@@ -22,14 +29,22 @@ app.use(cors());
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Welcome!");
-});
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
+app.use(express.json())
+app.use(helmet())
+app.use(xss())
+app.use(mongoSanitize())
+
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs",authenticateUser, jobsRouter);
+app.use("/api/v1/jobs", authenticateUser, jobsRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
