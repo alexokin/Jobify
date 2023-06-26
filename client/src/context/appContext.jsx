@@ -60,6 +60,11 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
+  search: "",
+  searchStatus: "all",
+  searchType: "all",
+  sort: "latest",
+  sortOptions: ["latest", "oldest", "a-z", "z-a"],
 };
 
 const AppContext = React.createContext();
@@ -297,16 +302,21 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
       // logoutUser()
     }
     clearAlert();
   };
 
+  const clearFilters = () => {
+    console.log('clear filters');
+  }
+
   return (
     <AppContext.Provider
       value={{
         ...state,
+        clearFilters,
         showStats,
         editJob,
         setEditJob,
