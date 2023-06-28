@@ -36,7 +36,7 @@ const Register = () => {
     }
     const currentUser = { name, email, password };
     if (isMember) {
-      loginUser(currentUser)
+      loginUser(currentUser);
     } else {
       registerUser(currentUser);
     }
@@ -79,6 +79,16 @@ const Register = () => {
         />
         <button type="submit" className="btn btn-block" disabled={isLoading}>
           Submit
+        </button>
+        <button
+          onClick={() => {
+            loginUser({ email: "testUser@test.com", password: "secret" });
+          }}
+          disabled={isLoading}
+          type="button"
+          className="btn btn-block btn-hipster"
+        >
+          {isLoading ? "loading..." : "test user"}
         </button>
         <p>
           {values.isMember ? "Not a member yet?" : "Already a member?"}
