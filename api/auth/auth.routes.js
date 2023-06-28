@@ -1,6 +1,8 @@
 import express from "express";
 const router = express.Router();
 import rateLimiter from "express-rate-limit";
+import { login, register, updateUser } from "./auth.controller.js";
+import authenticateUser from "../../middleware/auth.js";
 
 const apiLimiter = rateLimiter({
   windowMs: 15 * 60 * 1000,
@@ -8,8 +10,6 @@ const apiLimiter = rateLimiter({
   message:
     "Too many requests from this IP address, please try again after 15 minutes.",
 });
-import { login, register, updateUser } from "./auth.controller.js";
-import authenticateUser from "../../middleware/auth.js";
 
 router.route("/register").post(apiLimiter, register);
 router.route("/login").post(apiLimiter, login);
