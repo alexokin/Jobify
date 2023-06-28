@@ -6,6 +6,7 @@ import cors from "cors";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 import helmet from "helmet";
 import xss from "xss-clean";
@@ -37,7 +38,7 @@ app.use(express.json())
 app.use(helmet())
 app.use(xss())
 app.use(mongoSanitize())
-
+app.use(cookieParser())
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
