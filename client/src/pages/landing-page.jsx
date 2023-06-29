@@ -1,9 +1,10 @@
 import React from "react";
 import main from "../assets/images/main.svg";
 import Wrapper from "../assets/wrappers/LandingPage";
-import Logo from "../components/Logo";
 import { Link, Navigate } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
+import Logo from "../components/Logo";
+
 
 const LandingPage = () => {
   const { user } = useAppContext();
